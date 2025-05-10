@@ -17,7 +17,7 @@ spec:
       containers:
       - name: reverse-proxy
         image: dhirajbomma/homelab-utils-proxy:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8008
         resources:

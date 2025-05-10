@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caddy-config
+data:
+  Caddyfile: |
+    {
+      auto_https off
+    }
+
+    :80 {
+      handle_path /hosting/* {
+        reverse_proxy reverse-proxy.default.svc.cluster.local:8008
+      }
+
+      handle_path /hosting-api/* {
+        reverse_proxy server.default.svc.cluster.local:8000
+      }
+
+      respond "Hello from Caddy over HTTP"
+    }
