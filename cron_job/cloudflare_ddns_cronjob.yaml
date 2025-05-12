@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cloudflare-ddns-update
+spec:
+  # Cron schedule: every 5 minutes. Adjust as needed.
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid  # Prevent overlapping jobs
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: ddns-updater
+            image: dhirajbomma/ddns-updater:latest
+            env:
+            - name: CF_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-ddns-secret
+                  key: api-token
+            - name: CF_ZONE_ID
+              value: "7308287f0e2503c00395ffef9c84a961"
+            - name: CF_RECORD_ID
+              value: "c2833a871fabb307eb40bd23e4bff4c1"
+            - name: CF_RECORD_NAME
+              value: "zyxdb.xyz"
+          restartPolicy: OnFailure
+
