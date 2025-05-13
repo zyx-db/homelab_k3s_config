@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: ddns-updater
-            image: dhirajbomma/ddns-updater:latest
+            image: dhirajbomma/homelab-utils-ddns-cronjob:latest
             env:
             - name: CF_API_TOKEN
               valueFrom:
